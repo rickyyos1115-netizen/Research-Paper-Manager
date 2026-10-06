@@ -1,0 +1,24 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: research-paper-manager-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://research-paper-manager-ui.onrender.com
+
+  # Frontend Static Site
+  - type: web
+    name: research-paper-manager-ui
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview -- --port $PORT --host
+    envVars:
+      - key: VITE_API_URL
+        value: https://research-paper-manager-api.onrender.com/api
